@@ -1,0 +1,5 @@
+id;nome;especie;raca;nascimento;idCliente
+1;Rex;Cao;Vira-lata;10/03/2020;1
+2;Mimi;Gato;Siames;22/07/2021;2
+3;Piu;Passaro;Calopsita;05/01/2023;1
+4;Nemo;Peixe;Palhaco;15/09/2024;3
