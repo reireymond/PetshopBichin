@@ -5,6 +5,7 @@ import br.edu.ifmg.poo04.model.Pet;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -50,8 +51,10 @@ public class PetRepository {
     public void carregarDados(String arquivo, ClienteRepository clienteRepository) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+        BufferedReader leitor = null;
+
         try {
-            BufferedReader leitor = new BufferedReader(new FileReader(arquivo));
+            leitor = new BufferedReader(new FileReader(arquivo));
             String linha = leitor.readLine();
 
             // se a primeira linha for o cabecalho (id;...) pula ela
@@ -78,9 +81,17 @@ public class PetRepository {
 
                 linha = leitor.readLine();
             }
-            leitor.close();
         } catch (Exception e) {
             System.out.println("erro ao ler o arquivo " + arquivo);
+        } finally {
+            // o finally sempre roda, dando erro ou nao, entao fecha o arquivo aqui
+            try {
+                if (leitor != null) {
+                    leitor.close();
+                }
+            } catch (IOException e) {
+                System.out.println("erro ao fechar o arquivo " + arquivo);
+            }
         }
     }
 }

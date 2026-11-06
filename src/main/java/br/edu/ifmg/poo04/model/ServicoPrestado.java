@@ -73,7 +73,13 @@ public class ServicoPrestado {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || getClass() != obj.getClass()) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof ServicoPrestado)) {
             return false;
         }
         ServicoPrestado outro = (ServicoPrestado) obj;

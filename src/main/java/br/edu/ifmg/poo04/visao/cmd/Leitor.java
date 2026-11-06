@@ -3,7 +3,6 @@ package br.edu.ifmg.poo04.visao.cmd;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
 import java.util.Scanner;
 
 // classe pra ler os dados do teclado
@@ -49,16 +48,22 @@ public class Leitor {
     }
 
     // le a data no formato dd/MM/yyyy
-    // o STRICT faz recusar data que nao existe, tipo 31/02
-    // (com STRICT o ano precisa ser "uuuu" no lugar de "yyyy")
+    // o parse sozinho aceita 31/02 e troca pra 29/02 ou 28/02,
+    // entao depois de converter volta pra texto e compara com o que foi digitado
+    // se for diferente e porque a data nao existe
     public static LocalDate lerData(Scanner teclado, String mensagem) {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/uuuu")
-                .withResolverStyle(ResolverStyle.STRICT);
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         while (true) {
             try {
                 System.out.print(mensagem);
-                return LocalDate.parse(teclado.nextLine(), formato);
+                String texto = teclado.nextLine();
+                LocalDate data = LocalDate.parse(texto, formato);
+
+                if (!data.format(formato).equals(texto)) {
+                    throw new DateTimeParseException("data nao existe", texto, 0);
+                }
+                return data;
             } catch (DateTimeParseException e) {
                 System.out.println("data invalida, use o formato dd/MM/aaaa");
             }

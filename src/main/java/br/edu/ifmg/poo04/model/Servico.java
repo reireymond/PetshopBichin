@@ -43,7 +43,13 @@ public class Servico {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || getClass() != obj.getClass()) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Servico)) {
             return false;
         }
         Servico outro = (Servico) obj;

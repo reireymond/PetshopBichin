@@ -4,6 +4,7 @@ import br.edu.ifmg.poo04.model.Cliente;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 // guarda os clientes em um arraylist
@@ -46,8 +47,10 @@ public class ClienteRepository {
     // le o arquivo texto e adiciona os clientes na lista
     // cada linha do arquivo: id;nome;telefone
     public void carregarDados(String arquivo) {
+        BufferedReader leitor = null;
+
         try {
-            BufferedReader leitor = new BufferedReader(new FileReader(arquivo));
+            leitor = new BufferedReader(new FileReader(arquivo));
             String linha = leitor.readLine();
 
             // se a primeira linha for o cabecalho (id;...) pula ela
@@ -66,9 +69,17 @@ public class ClienteRepository {
 
                 linha = leitor.readLine();
             }
-            leitor.close();
         } catch (Exception e) {
             System.out.println("erro ao ler o arquivo " + arquivo);
+        } finally {
+            // o finally sempre roda, dando erro ou nao, entao fecha o arquivo aqui
+            try {
+                if (leitor != null) {
+                    leitor.close();
+                }
+            } catch (IOException e) {
+                System.out.println("erro ao fechar o arquivo " + arquivo);
+            }
         }
     }
 }

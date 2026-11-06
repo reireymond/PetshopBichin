@@ -44,7 +44,13 @@ public class Cliente {
     // dois clientes sao iguais se tiverem o mesmo id
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || getClass() != obj.getClass()) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Cliente)) {
             return false;
         }
         Cliente outro = (Cliente) obj;

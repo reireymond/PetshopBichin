@@ -85,7 +85,13 @@ public class Pet {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || getClass() != obj.getClass()) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Pet)) {
             return false;
         }
         Pet outro = (Pet) obj;
